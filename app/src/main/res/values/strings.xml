@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FavFlixApp</string>
+    <string name="home">Home</string>
+    <string name="home_screen">Home Screen</string>
+    <string name="favorites">Favorites</string>
+    <string name="favorite_screen">Favorite Screen</string>
+    <string name="detail_screen">Detail Screen</string>
+</resources>
