@@ -44,7 +44,8 @@ fun AddMovieScreen(
     onUserRatingChange: (String) -> Unit,
     navController: NavController,
     saveButton : () -> Unit,
-    buttonControl : () -> Boolean
+    buttonControl : () -> Boolean,
+    clearField : () -> Unit
 ) {
 
     Column(
@@ -92,6 +93,7 @@ fun AddMovieScreen(
            onClick = {
                navController.navigate(Screens.HOMESCREEN.route)
                saveButton()
+               clearField()
            },
            modifier = modifier.fillMaxWidth().padding(16.dp),
            enabled = buttonControl(),

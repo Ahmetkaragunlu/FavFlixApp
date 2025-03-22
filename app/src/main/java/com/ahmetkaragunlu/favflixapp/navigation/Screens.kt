@@ -1,8 +1,9 @@
 package com.ahmetkaragunlu.favflixapp.navigation
 
 enum class Screens(val route : String) {
-    HOMESCREEN(route = "home_screen"),
-    DETAILSCREEN(route = "detail_screen"),
-    FAVORITESCREEN(route = "favorite_screen"),
-    ADDMOVIESCREEN(route = "add_movie_screen"),
+    HOMESCREEN(route = "HomeScreen"),
+    DETAILSCREEN(route = "DetailScreen"),
+    FAVORITESCREEN(route = "FavoriteScreen"),
+    ADDMOVIESCREEN(route = "AddMovieScreen"),
+    EDITMOVIESCREEN(route = "EditMovieScreen"),
 }

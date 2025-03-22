@@ -3,22 +3,21 @@ package com.ahmetkaragunlu.favflixapp.navigation
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.ahmetkaragunlu.favflixapp.components.BottomNavigation
+import androidx.navigation.navArgument
 import com.ahmetkaragunlu.favflixapp.components.AppTopBar
+import com.ahmetkaragunlu.favflixapp.components.BottomNavigation
 import com.ahmetkaragunlu.favflixapp.screens.AddMovieScreen
+import com.ahmetkaragunlu.favflixapp.screens.DetailScreen
+import com.ahmetkaragunlu.favflixapp.screens.EditMovieSceen
 import com.ahmetkaragunlu.favflixapp.screens.HomeScreen
 import com.ahmetkaragunlu.favflixapp.viewmodel.FavFlixViewModel
 
@@ -31,32 +30,49 @@ fun FavFlixNavigation(modifier: Modifier = Modifier,viewModel:FavFlixViewModel =
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route ?: Screens.HOMESCREEN.route
 
-    var previousRoute by remember{ mutableStateOf(currentRoute) }
 
-    LaunchedEffect(currentRoute) {
-        if (previousRoute == Screens.ADDMOVIESCREEN.route && currentRoute != Screens.ADDMOVIESCREEN.route) {
-            viewModel.clearField()
-        }
-        previousRoute = currentRoute
-    }
     Scaffold(
-        topBar = { AppTopBar(currentRoute = currentRoute, navController = navController) },
+        topBar = { AppTopBar(currentRoute = currentRoute, navController = navController, clearField = {viewModel.clearField()})},
         bottomBar = { BottomNavigation(currentRoute = currentRoute, navController = navController) }
     ) { paddingValues ->
         NavHost(
             navController = navController, startDestination = Screens.HOMESCREEN.route,
             modifier = modifier.padding(paddingValues)
         ) {
-            composable(route = Screens.HOMESCREEN.route) {
+            composable(
+              route=Screens.HOMESCREEN.route
+            ) {
              HomeScreen(
                  navController = navController,
-                 movieList = uiState
+                 movieList = uiState,
              )
             }
-            composable(route = Screens.FAVORITESCREEN.route) {
+            composable(
+                route = "DetailScreen/{itemId}",
+                arguments = listOf(navArgument("itemId"){type= NavType.IntType})
+            ) { navBackStackEntry ->
+                val itemId = navBackStackEntry.arguments?.getInt("itemId")
+                DetailScreen(
+                    itemId = itemId,
+                    itemList = uiState,
+                    deleteItem = {viewModel.deleteItem(it)},
+                    navController = navController
+                )
             }
-            composable(route = Screens.DETAILSCREEN.route) {
+            composable(route = Screens.FAVORITESCREEN.route) {
 
+            }
+            composable(
+                route = "EditMovieScreen/{itemId}",
+                arguments = listOf(navArgument("itemId"){type= NavType.IntType})
+            ) {navBackStackEntry ->
+                val itemId=navBackStackEntry.arguments?.getInt("itemId")
+              EditMovieSceen(
+                  itemId =itemId,
+                  movieList = uiState,
+                  updateItem = {viewModel.update(it)},
+                  navController = navController
+              )
             }
             composable(route=Screens.ADDMOVIESCREEN.route) {
                 AddMovieScreen(
@@ -70,7 +86,8 @@ fun FavFlixNavigation(modifier: Modifier = Modifier,viewModel:FavFlixViewModel =
                     onUserRatingChange = {viewModel.setUserRating(it)},
                     navController = navController,
                     saveButton = {viewModel.saveButton()},
-                    buttonControl = {viewModel.buttonControl()}
+                    buttonControl = {viewModel.buttonControl()},
+                    clearField = {viewModel.clearField()}
                 )
             }
         }

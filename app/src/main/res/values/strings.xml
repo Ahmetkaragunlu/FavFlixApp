@@ -11,8 +11,11 @@
     <string name="movie_user_rating">User Rating: %s</string>
     <string name="home_screen">Home Screen</string>
     <string name="favorites">Favorites</string>
+    <string name="delete">Delete</string>
     <string name="favorite_screen">Favorite Screen</string>
     <string name="detail_screen">Detail Screen</string>
+    <string name="edit_movie_screen">Edit Screen</string>
     <string name="add_movie_screen">Add Movie Screen</string>
     <string name="save">Save</string>
+    <string name="update_rating">Update Rating</string>
 </resources>

@@ -36,44 +36,51 @@ fun HomeScreen(
     navController: NavController,
     movieList: List<Item>
 ) {
-    Box(modifier = modifier.fillMaxSize()) {
-        LazyColumn {
-            items(movieList) { item->
-                Card(
-                    modifier = modifier.fillMaxWidth().padding(12.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor =MaterialTheme.colorScheme.primaryContainer)
-                ) {
-                    Column(modifier = modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Text(
-                            text = stringResource(R.string.movie_title,item.movieTitle),
-                            style =MaterialTheme.typography.titleMedium
-                        )
-                        Text(
-                            text = stringResource(R.string.movie_category,item.category),
-                            style =MaterialTheme.typography.titleMedium
-                        )
-                        Text(
-                            text = stringResource(R.string.movie_rating,item.rating),
-                            style =MaterialTheme.typography.titleMedium
-                        )
-                        Text(
-                            text = stringResource(R.string.movie_user_rating,item.userRating),
-                            style =MaterialTheme.typography.titleMedium
-                        )
+        Box(modifier = modifier.fillMaxSize()) {
+            LazyColumn {
+                items(movieList) { item ->
+                    Card(
+                        modifier = modifier.fillMaxWidth().padding(12.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
+                        onClick = {
+                            navController.navigate("${Screens.DETAILSCREEN.route}/${item.id}")
+                        }
+                    ) {
+                        Column(
+                            modifier = modifier.fillMaxSize().padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.movie_title, item.movieTitle),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            Text(
+                                text = stringResource(R.string.movie_category, item.category),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            Text(
+                                text = stringResource(R.string.movie_rating, item.rating),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                            Text(
+                                text = stringResource(R.string.movie_user_rating, item.userRating),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
                     }
-                }
 
+                }
+            }
+            FloatingActionButton(
+                onClick = { navController.navigate(Screens.ADDMOVIESCREEN.route) },
+                modifier = modifier.padding(16.dp).align(Alignment.BottomEnd)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = null
+                )
             }
         }
-        FloatingActionButton(
-            onClick = {navController.navigate(Screens.ADDMOVIESCREEN.route)},
-            modifier = modifier.padding(16.dp).align(Alignment.BottomEnd)
-        ) {
-         Icon(
-             imageVector = Icons.Default.Add,
-             contentDescription = null
-         )
-        }
-    }
+
 }

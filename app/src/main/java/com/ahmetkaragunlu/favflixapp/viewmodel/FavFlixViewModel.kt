@@ -40,39 +40,49 @@ class FavFlixViewModel @Inject constructor(private val repo: FavFlixRepo) : View
         private set
 
 
-    fun setTitle(title : String) {
-        inputTitle=title
+    fun setTitle(title: String) {
+        inputTitle = title
 
     }
-    fun setCategory(category : String) {
-        inputCategory=category
+
+    fun setCategory(category: String) {
+        inputCategory = category
 
     }
-    fun setRating(rating : String) {
-        inputRating=rating
+
+    fun setRating(rating: String) {
+        inputRating = rating
 
     }
-    fun setUserRating(userRating : String) {
-        inputUserRating=userRating
+
+    fun setUserRating(userRating: String) {
+        inputUserRating = userRating
     }
 
     fun saveButton() {
-        val newItem=Item(
+        val newItem = Item(
             movieTitle = inputTitle,
             category = inputCategory,
             rating = inputRating.toFloatOrNull() ?: 0.0f,
-            userRating = inputUserRating.toFloatOrNull() ?:0.0f
+            userRating = inputUserRating.toFloatOrNull() ?: 0.0f
         )
         add(newItem)
     }
+
     fun clearField() {
         inputTitle = ""
         inputCategory = ""
         inputRating = ""
         inputUserRating = ""
     }
-  fun buttonControl() : Boolean = inputTitle.isNotBlank() && inputRating.isNotBlank()
-          && inputCategory.isNotBlank() && inputUserRating.isNotBlank()
+
+    fun deleteItem(item : Item) {
+        delete(item)
+    }
+
+
+    fun buttonControl(): Boolean = inputTitle.isNotBlank() && inputRating.isNotBlank()
+            && inputCategory.isNotBlank() && inputUserRating.isNotBlank()
 
     fun add(item: Item) = viewModelScope.launch { repo.add(item) }
     fun delete(item: Item) = viewModelScope.launch { repo.delete(item) }
