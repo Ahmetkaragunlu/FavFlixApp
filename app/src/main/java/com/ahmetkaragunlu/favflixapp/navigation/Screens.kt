@@ -4,4 +4,5 @@ enum class Screens(val route : String) {
     HOMESCREEN(route = "home_screen"),
     DETAILSCREEN(route = "detail_screen"),
     FAVORITESCREEN(route = "favorite_screen"),
+    ADDMOVIESCREEN(route = "add_movie_screen"),
 }

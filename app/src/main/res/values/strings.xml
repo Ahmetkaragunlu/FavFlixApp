@@ -1,8 +1,18 @@
 <resources>
     <string name="app_name">FavFlixApp</string>
     <string name="home">Home</string>
+    <string name="title">Title</string>
+    <string name="movie_title">Title: %s</string>
+    <string name="category">Category</string>
+    <string name="movie_category">Category: %s</string>
+    <string name="rating">Rating</string>
+    <string name="movie_rating">Rating: %s</string>
+    <string name="user_rating">User Rating</string>
+    <string name="movie_user_rating">User Rating: %s</string>
     <string name="home_screen">Home Screen</string>
     <string name="favorites">Favorites</string>
     <string name="favorite_screen">Favorite Screen</string>
     <string name="detail_screen">Detail Screen</string>
+    <string name="add_movie_screen">Add Movie Screen</string>
+    <string name="save">Save</string>
 </resources>
