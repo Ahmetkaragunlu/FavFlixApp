@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,7 +20,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.room.Update
 import com.ahmetkaragunlu.favflixapp.R
 import com.ahmetkaragunlu.favflixapp.components.AppTextField
 import com.ahmetkaragunlu.favflixapp.navigation.Screens
@@ -62,5 +60,4 @@ fun EditMovieSceen(
         }
 
     }
-
 }

@@ -22,5 +22,8 @@ data class Item(
    @ColumnInfo(name = "user_rating")
     val userRating : Float,
 
+    @ColumnInfo(name = "isFavorite")
+    val isFavorite : Boolean = false
+
 
 )

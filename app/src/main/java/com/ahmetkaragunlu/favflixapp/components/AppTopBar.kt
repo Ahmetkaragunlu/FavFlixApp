@@ -34,7 +34,7 @@ fun AppTopBar(currentRoute : String, navController: NavController, clearField : 
             if (currentRoute != Screens.HOMESCREEN.route) {
                 IconButton(
                     onClick = {
-                        navController.navigateUp()
+                        navController.navigate(Screens.HOMESCREEN.route)
                         clearField()
                     }
                 ) {

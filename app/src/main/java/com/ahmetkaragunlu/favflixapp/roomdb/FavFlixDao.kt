@@ -12,8 +12,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FavFlixDao {
 
-    @Query("Select * From items ORDER by rating ASC")
+    @Query("Select * From items ORDER by rating DESC")
     fun getAllItems():Flow<List<Item>>
+
+    @Query("Select * From items Where isFavorite = 1")
+    fun getAllFavorites () : Flow<List<Item>>
+
+    @Query("UPDATE items SET isFavorite = :isFavorite WHERE id = :itemId")
+    suspend fun updateFavoriteStatus(itemId: Int, isFavorite: Boolean)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(item: Item)

@@ -21,6 +21,8 @@ class FavFlixViewModel @Inject constructor(private val repo: FavFlixRepo) : View
 
     private val _uiState = MutableStateFlow<List<Item>>(emptyList())
     val uiState: StateFlow<List<Item>> = _uiState.asStateFlow()
+    private val _favoriteState = MutableStateFlow<List<Item>>(emptyList())
+    val favoriteState : StateFlow<List<Item>> = _favoriteState.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -28,7 +30,17 @@ class FavFlixViewModel @Inject constructor(private val repo: FavFlixRepo) : View
                 _uiState.value = itemList
             }
         }
-    }
+        viewModelScope.launch {
+            repo.getAllFavorites().collect { item ->
+                _favoriteState.value=item
+            }
+        }
+        }
+
+
+
+
+
 
     var inputTitle by mutableStateOf("")
         private set
@@ -87,4 +99,6 @@ class FavFlixViewModel @Inject constructor(private val repo: FavFlixRepo) : View
     fun add(item: Item) = viewModelScope.launch { repo.add(item) }
     fun delete(item: Item) = viewModelScope.launch { repo.delete(item) }
     fun update(item: Item) = viewModelScope.launch { repo.update(item) }
+    fun updateFavoriteStatus(itemId : Int, isFavorite : Boolean)=viewModelScope.launch { repo.updateFavoritesStatus(itemId,isFavorite) }
+
 }
