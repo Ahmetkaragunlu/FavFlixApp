@@ -1,6 +1,5 @@
 package com.ahmetkaragunlu.favflixapp.screens
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,22 +9,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.ahmetkaragunlu.favflixapp.R
 import com.ahmetkaragunlu.favflixapp.components.AppTextField
 import com.ahmetkaragunlu.favflixapp.navigation.Screens
@@ -43,15 +35,15 @@ fun AddMovieScreen(
     userRating: String,
     onUserRatingChange: (String) -> Unit,
     navController: NavController,
-    saveButton : () -> Unit,
-    buttonControl : () -> Boolean,
-    clearField : () -> Unit
+    saveButton: () -> Unit,
+    buttonControl: () -> Boolean,
+    clearField: () -> Unit
 ) {
-
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp).verticalScroll(rememberScrollState())
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
     ) {
         AppTextField(
             value = title,
@@ -89,21 +81,22 @@ fun AddMovieScreen(
                 imeAction = ImeAction.Done
             )
         )
-       Button(
-           onClick = {
-               navController.navigate(Screens.HOMESCREEN.route)
-               saveButton()
-               clearField()
-           },
-           modifier = modifier.fillMaxWidth().padding(16.dp),
-           enabled = buttonControl(),
-           shape = RoundedCornerShape(topStart = 16.dp, bottomEnd = 32.dp)
-       ) {
-           Text(
-               text = stringResource(R.string.save),
-               style = MaterialTheme.typography.labelLarge,
-           )
-       }
-
+        Button(
+            onClick = {
+                navController.navigate(Screens.HOMESCREEN.route)
+                saveButton()
+                clearField()
+            },
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            enabled = buttonControl(),
+            shape = RoundedCornerShape(topStart = 16.dp, bottomEnd = 32.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.save),
+                style = MaterialTheme.typography.labelLarge,
+            )
+        }
     }
 }

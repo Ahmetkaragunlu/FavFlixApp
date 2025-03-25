@@ -28,20 +28,22 @@ import com.ahmetkaragunlu.favflixapp.roomdb.Item
 @Composable
 fun EditMovieSceen(
     modifier: Modifier = Modifier,
-    itemId : Int?,
-    movieList : List<Item>,
-    updateItem : (Item) -> Unit,
+    itemId: Int?,
+    movieList: List<Item>,
+    updateItem: (Item) -> Unit,
     navController: NavController
 ) {
-    val selectedId = movieList.firstOrNull {id-> id.id == itemId}
-
+    val selectedId = movieList.firstOrNull { id -> id.id == itemId }
     var userRating by rememberSaveable { mutableStateOf(selectedId?.userRating?.toString() ?: " ") }
-    if(selectedId!=null) {
-        Column (modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.spacedBy(16.dp)){
+    if (selectedId != null) {
+        Column(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
             AppTextField(
                 value = userRating,
-                onValueChange = {userRating=it},
-                label = R.string.user_rating ,
+                onValueChange = { userRating = it },
+                label = R.string.user_rating,
                 keyboardOptions = KeyboardOptions.Default.copy(
                     imeAction = ImeAction.Done,
                     keyboardType = KeyboardType.Number
@@ -52,12 +54,13 @@ fun EditMovieSceen(
                     updateItem(selectedId.copy(userRating = userRating.toFloatOrNull() ?: 0f))
                     navController.navigate(Screens.HOMESCREEN.route)
                 },
-                modifier = modifier.fillMaxWidth().padding(16.dp),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 shape = RoundedCornerShape(topStart = 16.dp, bottomEnd = 32.dp)
             ) {
                 Text(text = stringResource(R.string.save))
             }
         }
-
     }
 }

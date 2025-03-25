@@ -28,6 +28,4 @@ object AppModule {
             FaxFlixDatabase::class.java,
            name = "items"
         ).fallbackToDestructiveMigration().build()
-
-
 }

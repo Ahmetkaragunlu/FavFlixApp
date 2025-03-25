@@ -15,6 +15,7 @@
     <string name="favorite_screen">Favorite Screen</string>
     <string name="detail_screen">Detail Screen</string>
     <string name="edit_movie_screen">Edit Screen</string>
+    <string name="search_film">Search for a movie</string>
     <string name="add_movie_screen">Add Movie Screen</string>
     <string name="save">Save</string>
     <string name="update_rating">Update Rating</string>

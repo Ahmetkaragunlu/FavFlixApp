@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.room.Delete
 import com.ahmetkaragunlu.favflixapp.R
 import com.ahmetkaragunlu.favflixapp.navigation.Screens
 import com.ahmetkaragunlu.favflixapp.roomdb.Item
@@ -27,11 +26,10 @@ fun DetailScreen(
     itemId: Int?,
     modifier: Modifier = Modifier,
     itemList: List<Item>,
-    deleteItem : (Item) -> Unit,
+    deleteItem: (Item) -> Unit,
     navController: NavController
 ) {
     val selectedItem = itemList.firstOrNull { item -> item.id == itemId }
-
     if (selectedItem != null) {
         Column(
             modifier = Modifier
@@ -66,25 +64,28 @@ fun DetailScreen(
                     )
                 }
             }
-                Button(
-                    onClick = {
-                        deleteItem(selectedItem)
-                    },
-                    modifier = modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp),
-                    shape = RoundedCornerShape(topStart = 16.dp, bottomEnd = 32.dp)
-                ) {
-                    Text(text = stringResource(R.string.delete))
-                }
+            Button(
+                onClick = {
+                    deleteItem(selectedItem)
+                },
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp),
+                shape = RoundedCornerShape(topStart = 16.dp, bottomEnd = 32.dp)
+            ) {
+                Text(text = stringResource(R.string.delete))
+            }
             Button(
                 onClick = {
                     navController.navigate("${Screens.EDITMOVIESCREEN.route}/${selectedItem.id}")
-                          },
-                modifier = modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp),
+                },
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp),
                 shape = RoundedCornerShape(topStart = 16.dp, bottomEnd = 32.dp)
             ) {
                 Text(text = stringResource(R.string.update_rating))
             }
         }
-
     }
 }

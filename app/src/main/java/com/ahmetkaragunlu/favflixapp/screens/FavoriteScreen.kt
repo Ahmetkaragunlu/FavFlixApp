@@ -29,13 +29,14 @@ import com.ahmetkaragunlu.favflixapp.roomdb.Item
 @Composable
 fun FavoriteScreen(
     modifier: Modifier = Modifier,
-    favoriteList : List<Item>,
-    isFavoriteStatus : (Int,Boolean) -> Unit
+    favoriteList: List<Item>,
+    isFavoriteStatus: (Int, Boolean) -> Unit
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(favoriteList) { item ->
             Card(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(12.dp),
                 shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
@@ -59,9 +60,9 @@ fun FavoriteScreen(
                             imageVector = Icons.Default.Favorite,
                             contentDescription = null,
                             modifier = modifier.clickable {
-                            isFavoriteStatus(item.id,!item.isFavorite)
+                                isFavoriteStatus(item.id, !item.isFavorite)
                             },
-                            tint = if(item.isFavorite) Color.Yellow else Color.White
+                            tint = if (item.isFavorite) Color.Yellow else Color.White
                         )
                     }
                     Text(
@@ -80,5 +81,5 @@ fun FavoriteScreen(
             }
         }
     }
-      }
+}
 

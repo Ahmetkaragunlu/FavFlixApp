@@ -28,13 +28,12 @@ fun FavFlixNavigation(
     modifier: Modifier = Modifier,
     viewModel: FavFlixViewModel = hiltViewModel()
 ) {
-
     val navController = rememberNavController()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val favoriteState by viewModel.favoriteState.collectAsStateWithLifecycle()
+    val searchResults by viewModel.searchResults.collectAsStateWithLifecycle()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route ?: Screens.HOMESCREEN.route
-
 
     Scaffold(
         topBar = {
@@ -56,11 +55,11 @@ fun FavFlixNavigation(
                     navController = navController,
                     movieList = uiState,
                     isFavoriteStatus = { itemId, isFavorite ->
-                        viewModel.updateFavoriteStatus(
-                            itemId,
-                            isFavorite
-                        )
-                    }
+                        viewModel.updateFavoriteStatus(itemId, isFavorite)
+                    },
+                    searchResult = searchResults,
+                    searchMoviesByTitleOrCategory = { viewModel.updateSearch(it) },
+                    query = viewModel.search
                 )
             }
             composable(
@@ -78,7 +77,12 @@ fun FavFlixNavigation(
             composable(route = Screens.FAVORITESCREEN.route) {
                 FavoriteScreen(
                     favoriteList = favoriteState,
-                    isFavoriteStatus = {itemId,isFavorite -> viewModel.updateFavoriteStatus(itemId,isFavorite)}
+                    isFavoriteStatus = { itemId, isFavorite ->
+                        viewModel.updateFavoriteStatus(
+                            itemId,
+                            isFavorite
+                        )
+                    }
                 )
             }
             composable(

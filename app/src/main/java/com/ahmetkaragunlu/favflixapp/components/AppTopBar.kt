@@ -18,7 +18,7 @@ import com.ahmetkaragunlu.favflixapp.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppTopBar(currentRoute : String, navController: NavController, clearField : () -> Unit ) {
+fun AppTopBar(currentRoute: String, navController: NavController, clearField: () -> Unit) {
     val title = when {
         currentRoute == Screens.HOMESCREEN.route -> R.string.home_screen
         currentRoute == Screens.FAVORITESCREEN.route -> R.string.favorite_screen
@@ -27,7 +27,6 @@ fun AppTopBar(currentRoute : String, navController: NavController, clearField : 
         currentRoute == Screens.ADDMOVIESCREEN.route -> R.string.add_movie_screen
         else -> R.string.home_screen
     }
-
     TopAppBar(
         title = { Text(text = stringResource(title)) },
         navigationIcon = {

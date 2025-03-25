@@ -1,12 +1,10 @@
 package com.ahmetkaragunlu.favflixapp.viewmodel
 
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ahmetkaragunlu.favflixapp.navigation.Screens
 import com.ahmetkaragunlu.favflixapp.repo.FavFlixRepo
 import com.ahmetkaragunlu.favflixapp.roomdb.Item
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +20,9 @@ class FavFlixViewModel @Inject constructor(private val repo: FavFlixRepo) : View
     private val _uiState = MutableStateFlow<List<Item>>(emptyList())
     val uiState: StateFlow<List<Item>> = _uiState.asStateFlow()
     private val _favoriteState = MutableStateFlow<List<Item>>(emptyList())
-    val favoriteState : StateFlow<List<Item>> = _favoriteState.asStateFlow()
+    val favoriteState: StateFlow<List<Item>> = _favoriteState.asStateFlow()
+    private val _searchResults = MutableStateFlow<List<Item>>(emptyList())
+    val searchResults: StateFlow<List<Item>> = _searchResults.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -32,15 +32,18 @@ class FavFlixViewModel @Inject constructor(private val repo: FavFlixRepo) : View
         }
         viewModelScope.launch {
             repo.getAllFavorites().collect { item ->
-                _favoriteState.value=item
+                _favoriteState.value = item
             }
         }
+    }
+
+  private fun searchMoviesByTitleOrCategory(query: String) {
+        viewModelScope.launch {
+            repo.searchMoviesByTitleOrCategory(query).collect { item ->
+                _searchResults.value = item
+            }
         }
-
-
-
-
-
+    }
 
     var inputTitle by mutableStateOf("")
         private set
@@ -50,7 +53,13 @@ class FavFlixViewModel @Inject constructor(private val repo: FavFlixRepo) : View
         private set
     var inputUserRating by mutableStateOf("")
         private set
+    var search by mutableStateOf("")
+        private set
 
+    fun updateSearch(query: String) {
+        search = query
+        searchMoviesByTitleOrCategory(search)
+    }
 
     fun setTitle(title: String) {
         inputTitle = title
@@ -88,17 +97,17 @@ class FavFlixViewModel @Inject constructor(private val repo: FavFlixRepo) : View
         inputUserRating = ""
     }
 
-    fun deleteItem(item : Item) {
+    fun deleteItem(item: Item) {
         delete(item)
     }
-
 
     fun buttonControl(): Boolean = inputTitle.isNotBlank() && inputRating.isNotBlank()
             && inputCategory.isNotBlank() && inputUserRating.isNotBlank()
 
-    fun add(item: Item) = viewModelScope.launch { repo.add(item) }
-    fun delete(item: Item) = viewModelScope.launch { repo.delete(item) }
+    private fun add(item: Item) = viewModelScope.launch { repo.add(item) }
+    private fun delete(item: Item) = viewModelScope.launch { repo.delete(item) }
     fun update(item: Item) = viewModelScope.launch { repo.update(item) }
-    fun updateFavoriteStatus(itemId : Int, isFavorite : Boolean)=viewModelScope.launch { repo.updateFavoritesStatus(itemId,isFavorite) }
+    fun updateFavoriteStatus(itemId: Int, isFavorite: Boolean) =
+        viewModelScope.launch { repo.updateFavoritesStatus(itemId, isFavorite) }
 
 }

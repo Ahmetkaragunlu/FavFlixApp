@@ -18,6 +18,9 @@ interface FavFlixDao {
     @Query("Select * From items Where isFavorite = 1")
     fun getAllFavorites () : Flow<List<Item>>
 
+    @Query("SELECT * FROM items WHERE title LIKE '%' || :query || '%' OR category LIKE '%' || :query || '%'")
+    fun searchMoviesByTitleOrCategory(query: String): Flow<List<Item>>
+
     @Query("UPDATE items SET isFavorite = :isFavorite WHERE id = :itemId")
     suspend fun updateFavoriteStatus(itemId: Int, isFavorite: Boolean)
 
