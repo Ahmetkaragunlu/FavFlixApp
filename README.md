@@ -15,6 +15,8 @@ FavFlix is a movie management application built with the MVVM architecture. User
 🔍 Search for movies
 
 🛠 Technologies Used
+
+
 Jetpack Compose – Modern UI design
 
 Room Database – For data storage
